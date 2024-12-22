@@ -33,6 +33,7 @@ async function run() {
 
     // create database
     const serviceCollection = client.db("ServiceDB").collection("service");
+    const bookingCollection = client.db("ServiceDB").collection("booking_requests");
 
     // create a service and store db
     app.post("/add-service", async (req, res) => {
@@ -54,6 +55,15 @@ async function run() {
       const result = await serviceCollection.findOne(query);
       res.send(result)
     })
+
+    // create a booking request api and store db
+    app.post('/booking-request', async(req, res)=>{
+      const bookingData = req.body;
+      const result = await bookingCollection.insertOne(bookingData);
+      res.send(result);
+    })
+
+
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
