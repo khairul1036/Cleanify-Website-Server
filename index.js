@@ -63,6 +63,13 @@ async function run() {
       res.send(result);
     })
 
+    // get create service by email to specific user
+    app.get('/my-service/:email', async(req,res)=>{
+      const email = req.params.email;
+      const query = {"provider.email": email};
+      const result = await serviceCollection.find(query).toArray();
+      res.send(result)
+    })
 
   } finally {
     // Ensures that the client will close when you finish/error
