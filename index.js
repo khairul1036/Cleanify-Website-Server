@@ -33,7 +33,9 @@ async function run() {
 
     // create database
     const serviceCollection = client.db("ServiceDB").collection("service");
-    const bookingCollection = client.db("ServiceDB").collection("booking_requests");
+    const bookingCollection = client
+      .db("ServiceDB")
+      .collection("booking_requests");
 
     // create a service and store db
     app.post("/add-service", async (req, res) => {
@@ -48,29 +50,36 @@ async function run() {
       res.send(result);
     });
 
-    // get one service by id 
-    app.get('/services/:id',async(req,res)=>{
+    // get one service by id
+    app.get("/services/:id", async (req, res) => {
       const id = req.params.id;
-      const query = {_id: new ObjectId(id)};
+      const query = { _id: new ObjectId(id) };
       const result = await serviceCollection.findOne(query);
-      res.send(result)
-    })
+      res.send(result);
+    });
 
     // create a booking request api and store db
-    app.post('/booking-request', async(req, res)=>{
+    app.post("/booking-request", async (req, res) => {
       const bookingData = req.body;
       const result = await bookingCollection.insertOne(bookingData);
       res.send(result);
-    })
+    });
 
     // get create service by email to specific user
-    app.get('/my-service/:email', async(req,res)=>{
+    app.get("/my-service/:email", async (req, res) => {
       const email = req.params.email;
-      const query = {"provider.email": email};
+      const query = { "provider.email": email };
       const result = await serviceCollection.find(query).toArray();
-      res.send(result)
-    })
+      res.send(result);
+    });
 
+    // delete my created service
+    app.post("/delete-service/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await serviceCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
