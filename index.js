@@ -93,6 +93,14 @@ async function run() {
       const result = await serviceCollection.updateOne(query, updated, options);
       res.send(result);
     });
+
+    // get all  my-booked data by user email
+    app.get('/my-booking/:email', async(req,res)=>{
+      const email = req.params.email;
+      const query = { "userInfo.email": email };
+      const result = await bookingCollection.find(query).toArray();
+      res.send(result);
+    })
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
