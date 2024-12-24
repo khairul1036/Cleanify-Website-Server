@@ -46,7 +46,14 @@ async function run() {
 
     // get all service from db
     app.get("/services", async (req, res) => {
-      const result = await serviceCollection.find().toArray();
+      const search = req.query.search;
+      let query = {
+        title: {
+          $regex: search,
+          $options: "i",
+        },
+      };
+      const result = await serviceCollection.find(query).toArray();
       res.send(result);
     });
 
@@ -95,12 +102,33 @@ async function run() {
     });
 
     // get all  my-booked data by user email
-    app.get('/my-booking/:email', async(req,res)=>{
+    app.get("/my-booking/:email", async (req, res) => {
+      const isProvider = req.query.provider;
       const email = req.params.email;
-      const query = { "userInfo.email": email };
+      // const query = { "userInfo.email": email };
+      let query = {};
+      if (isProvider) {
+        query = { "provider.email": email };
+      } else {
+        query = { "userInfo.email": email };
+      }
       const result = await bookingCollection.find(query).toArray();
       res.send(result);
-    })
+    });
+
+    // update service booked status
+    app.patch("/booked-status-update/:id", async (req, res) => {
+      const id = req.params.id;
+      const { serviceStatus } = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const updated = {
+        $set: { serviceStatus },
+      };
+      const result = await bookingCollection.updateOne(filter, updated);
+      res.send(result);
+    });
+
+
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
