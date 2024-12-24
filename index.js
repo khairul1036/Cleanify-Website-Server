@@ -80,6 +80,19 @@ async function run() {
       const result = await serviceCollection.deleteOne(query);
       res.send(result);
     });
+
+    // save a update service data in db
+    app.put("/update-service/:id", async (req, res) => {
+      const id = req.params.id;
+      const serviceData = req.body;
+      const updated = {
+        $set: serviceData,
+      };
+      const query = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const result = await serviceCollection.updateOne(query, updated, options);
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
