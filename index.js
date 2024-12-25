@@ -102,6 +102,8 @@ async function run() {
 
     // get all service from db
     app.get("/services", async (req, res) => {
+      const size = parseInt(req.query.size);
+      const page = parseInt(req.query.page) - 1;
       const search = req.query.search;
       let query = {
         title: {
@@ -109,7 +111,11 @@ async function run() {
           $options: "i",
         },
       };
-      const result = await serviceCollection.find(query).toArray();
+      const result = await serviceCollection
+        .find(query)
+        .skip(page * size)
+        .limit(size)
+        .toArray();
       res.send(result);
     });
 
