@@ -192,6 +192,12 @@ async function run() {
       const result = await bookingCollection.updateOne(filter, updated);
       res.send(result);
     });
+
+    // get popular 6 services
+    app.get("/popular-services", async (req, res) => {
+      const result = await serviceCollection.find().limit(6).toArray();
+      res.send(result); // Send the list of movies as a JSON response
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
