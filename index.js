@@ -8,7 +8,11 @@ const app = express();
 const cookieParser = require("cookie-parser");
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: [
+    "http://localhost:5173",
+    "https://a11service.web.app",
+    "https://a11service.firebaseapp.com",
+  ],
   credentials: true,
   optionalSuccessStatus: 200,
 };
@@ -49,12 +53,12 @@ const verifyToken = (req, res, next) => {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
 
     // create database
     const serviceCollection = client.db("ServiceDB").collection("service");
