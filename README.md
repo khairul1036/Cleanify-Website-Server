@@ -4,8 +4,8 @@
 
 **Live Link:** [https://a11service.web.app/](https://a11service.web.app/)
 
-- **Client Side:** [https://github.com/programming-hero-web-course2/b10a11-client-side-khairul1036](https://github.com/programming-hero-web-course2/b10a11-client-side-khairul1036)
-- **Server Side:** [https://github.com/programming-hero-web-course2/b10a11-server-side-khairul1036](https://github.com/programming-hero-web-course2/b10a11-server-side-khairul1036)
+- **Client Side:** [https://github.com/khairul1036/Cleanify-Website](https://github.com/khairul1036/Cleanify-Website)
+- **Server Side:** [https://github.com/khairul1036/Cleanify-Website-Server](https://github.com/khairul1036/Cleanify-Website-Server)
 
 ## Project Overview
 
@@ -35,4 +35,4 @@ Cleanify is a house cleaning services platform where users can add, update, and 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/programming-hero-web-course2/b10a11-client-side-khairul1036
+   git clone https://github.com/khairul1036/Cleanify-Website-Server
